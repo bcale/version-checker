@@ -25,11 +25,11 @@ applications:
   - name: Element Web
     github_repo: element-hq/element-web 
     tracked_cycle: ""
-    installed_version: "None"
+    installed_version: "1.12.10"
     version_check:
-      method: file
-      path: "/var/www/element-web/package.json"
-      regex: '"version":\s*"([\d.]+)"'
+      method: command
+      command: "wsl -- dpkg -l element-desktop"
+      regex: 'element-desktop\s+([\d.]+)'
 
   - name: Nextcloud
     github_repo: nextcloud/server

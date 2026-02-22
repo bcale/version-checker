@@ -48,7 +48,7 @@ def resolve_command(command: str) -> str:
     PowerShell commands are left unchanged.
     On Linux/macOS, returns the command unchanged.
     """
-    if IS_WINDOWS and not command.lower().startswith("powershell"):
+    if IS_WINDOWS and not command.lower().startswith(("powershell", "wsl")):
         return f"wsl -- {command}"
     return command
 

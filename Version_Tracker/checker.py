@@ -253,7 +253,7 @@ def build_confluence_html(results: list[dict]) -> str:
     <tr>
       <th>Application</th>
       <th>Currently Installed Version</th>
-      <th>Latest Release</th>
+      <th>Latest Release (github linked)</th>
       <th>Release Date</th>
       <th>EOL Date</th>
       <th>Days Until EOL</th>

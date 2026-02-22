@@ -11,61 +11,43 @@
 
 applications:
 
-  # - name: Mattermost
-  #   github_repo: mattermost/mattermost
-  #   eol_name: mattermost
-  #   tracked_cycle: "11.4"
-  #   version_check:
-  #     method: command
-  #     command: "sudo -u mmuser /usr/bin/mattermost-desktop version"
-  #     regex: 'Version:\s*([\d.]+)'
-  #   notes: >
-  #     Mattermost releases monthly. ESR releases every 9 months with 12 months of support.
-  #     Release policy: https://docs.mattermost.com/product-overview/release-policy.html
-
-  # - name: Element Web
-     #github_repo: element-hq/element-web
-  #   version_check:
-  #     method: file
-  #     path: "/var/www/element-web/package.json"
-  #     regex: '"version":\s*"([\d.]+)"'
-  #   notes: >
-  #     No formal EOL policy per version. Staying on latest is recommended for security.
-  #     Releases: https://github.com/element-hq/element-web/releases
-
-   - name: Mattermost
-     github_repo: mattermost/mattermost
-     eol_name: mattermost
-     tracked_cycle: "11.4"
-     version_check:
+  - name: Mattermost
+    github_repo: mattermost/mattermost
+    eol_name: mattermost
+    tracked_cycle: "11.4"
+    version_check:
       method: command
       command: "sudo -u mattermost /opt/mattermost/bin/mattermost version"
       regex: 'Version:\s*([\d.]+)'
 
-   - name: Element Web
-     github_repo: element-hq/element-web 
-     tracked_cycle: ""
-     version_check:
+  - name: Element Web
+    github_repo: element-hq/element-web 
+    tracked_cycle: ""
+    version_check:
       method: file
       path: "/var/www/element-web/package.json"
       regex: '"version":\s*"([\d.]+)"'
 
-   - name: Nextcloud
-     eol_name: nextcloud
-     tracked_cycle: ""
-     version_check:
+  - name: Nextcloud
+    github_repo: nextcloud/server
+    eol_name: nextcloud
+    tracked_cycle: "33"
+    version_check:
       method: file
       path: "/var/www/html/nextcloud/version.php"
       regex: '\$OC_VersionString\s*=\s*[''"]([^''"]+)[''"]'
 
-   - name: Logstash
-     version_check:
+  - name: Logstash
+    github_repo: elastic/logstash
+    eol_name: Logstash
+    tracked_cycle: "9.3"
+    version_check:
       method: file
       path: "/usr/share/logstash/version.rb"
       regex: "VERSION = \"([\\d.]+)\""
 
-  # - name: OpenSearch
-  #   github_repo: opensearch-project/OpenSearch
-  #   eol_name: opensearch
-  #   tracked_cycle: "3"
+  - name: OpenSearch
+    github_repo: opensearch-project/OpenSearch
+    eol_name: OpenSearch
+    tracked_cycle: "3"
 

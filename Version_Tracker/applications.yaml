@@ -1,51 +1,71 @@
-## EOL & Release Tracker - Tracked Applications
+# EOL & Release Tracker - Tracked Applications
 # ---------------------------------------------------
-# github_repo:    GitHub repo in "owner/repo" format
-# eol_name:       Product slug on endoflife.date (optional)
-# tracked_cycle:  The major/minor version cycle you want EOL info for
-#                 e.g. "32" for Nextcloud 32.x, "11.4" for Mattermost 11.4.x
-# esr_version:    ESR version number (optional, e.g. Mattermost)
-# esr_eol_date:   EOL date for the ESR track (YYYY-MM-DD)
-# notes:          Context for your team
+# github_repo:      GitHub repo in "owner/repo" format
+# eol_name:         Product slug on endoflife.date (optional)
+# tracked_cycle:    The major/minor cycle for EOL lookups
+# version_check:    How to detect the installed version on this machine
+#   method:         "command" | "file"
+#   command:        Shell command that outputs the version string
+#   path:           Path to a file containing the version (used if method: file)
+#   regex:          Regex with a capture group to extract the version number
 
 applications:
 
-  - name: Mattermost
-    github_repo: mattermost/mattermost
-    eol_name: mattermost
-    tracked_cycle: "11.4"
-    notes: >
-      Mattermost releases monthly. ESR releases every 9 months with 12 months of support.
-      Release policy: https://docs.mattermost.com/product-overview/release-policy.html
+  # - name: Mattermost
+  #   github_repo: mattermost/mattermost
+  #   eol_name: mattermost
+  #   tracked_cycle: "11.4"
+  #   version_check:
+  #     method: command
+  #     command: "sudo -u mmuser /usr/bin/mattermost-desktop version"
+  #     regex: 'Version:\s*([\d.]+)'
+  #   notes: >
+  #     Mattermost releases monthly. ESR releases every 9 months with 12 months of support.
+  #     Release policy: https://docs.mattermost.com/product-overview/release-policy.html
 
-  - name: Element Web
-    github_repo: element-hq/element-web
-    notes: >
-      No formal EOL policy per version. Staying on latest is recommended for security.
-      Next-gen desktop client lives at element-hq/element-desktop.
-      Releases: https://github.com/element-hq/element-web/releases
+  # - name: Element Web
+     #github_repo: element-hq/element-web
+  #   version_check:
+  #     method: file
+  #     path: "/var/www/element-web/package.json"
+  #     regex: '"version":\s*"([\d.]+)"'
+  #   notes: >
+  #     No formal EOL policy per version. Staying on latest is recommended for security.
+  #     Releases: https://github.com/element-hq/element-web/releases
 
-  - name: Nextcloud
-    github_repo: nextcloud/server
-    eol_name: nextcloud
-    tracked_cycle: "33"
-    notes: >
-      Major versions released annually, patches monthly.
-      Currently supported: v31, v32, v33. v30 is EOL.
-      Release schedule: https://github.com/nextcloud/server/wiki/Maintenance-and-Release-Schedule
+   - name: Mattermost
+     github_repo: mattermost/mattermost
+     eol_name: mattermost
+     tracked_cycle: "11.4"
+     version_check:
+      method: command
+      command: "sudo -u mattermost /opt/mattermost/bin/mattermost version"
+      regex: 'Version:\s*([\d.]+)'
 
-  - name: Logstash
-    github_repo: elastic/logstash
-    eol_name: logstash
-    tracked_cycle: "9.3"
-    notes: >
-      Part of the Elastic Stack. Major versions supported for 30 months from GA
-      or 18 months after the next major release, whichever is longer.
-      EOL dates: https://www.elastic.co/support/eol
+   - name: Element Web
+     github_repo: element-hq/element-web 
+     tracked_cycle: ""
+     version_check:
+      method: file
+      path: "/var/www/element-web/package.json"
+      regex: '"version":\s*"([\d.]+)"'
 
-  - name: OpenSearch
-    github_repo: opensearch-project/OpenSearch
-    eol_name: opensearch
-    tracked_cycle: "3"
+   - name: Nextcloud
+     eol_name: nextcloud
+     tracked_cycle: ""
+     version_check:
+      method: file
+      path: "/var/www/html/nextcloud/version.php"
+      regex: '\$OC_VersionString\s*=\s*[''"]([^''"]+)[''"]'
 
-    
+   - name: Logstash
+     version_check:
+      method: file
+      path: "/usr/share/logstash/version.rb"
+      regex: "VERSION = \"([\\d.]+)\""
+
+  # - name: OpenSearch
+  #   github_repo: opensearch-project/OpenSearch
+  #   eol_name: opensearch
+  #   tracked_cycle: "3"
+

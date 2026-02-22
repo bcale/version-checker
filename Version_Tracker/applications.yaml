@@ -12,9 +12,11 @@
 applications:
 
   - name: Mattermost
+    installed_version: "11.4.0"
     github_repo: mattermost/mattermost
     eol_name: mattermost
     tracked_cycle: "11.4"
+    installed_version: "11.4.0"
     version_check:
       method: command
       command: "sudo -u mattermost /opt/mattermost/bin/mattermost version"
@@ -23,6 +25,7 @@ applications:
   - name: Element Web
     github_repo: element-hq/element-web 
     tracked_cycle: ""
+    installed_version: "None"
     version_check:
       method: file
       path: "/var/www/element-web/package.json"
@@ -32,6 +35,7 @@ applications:
     github_repo: nextcloud/server
     eol_name: nextcloud
     tracked_cycle: "33"
+    installed_version: "None"
     version_check:
       method: file
       path: "/var/www/html/nextcloud/version.php"
@@ -41,6 +45,7 @@ applications:
     github_repo: elastic/logstash
     eol_name: logstash
     tracked_cycle: "9.3"
+    installed_version: "None"
     version_check:
       method: file
       path: "/usr/share/logstash/version.rb"
@@ -50,4 +55,5 @@ applications:
     github_repo: opensearch-project/OpenSearch
     eol_name: opensearch
     tracked_cycle: "2"
+    installed_version: ""
 

@@ -245,10 +245,9 @@ def build_confluence_html(results: list[dict]) -> str:
     html = f"""
 <div style="background-color:#E3FCEF; border-left: 4px solid #00875A; padding: 12px 16px; margin-bottom: 16px;">
   <strong>Daily Check — {today}</strong>
-  <p style="margin: 4px 0 0 0;">{total} applications tracked.</p>
+  <p style="margin: 4px 0 0 0;">{total} engine applications tracked for their currently installed version, latest release version/date, and EOL date.</p>
 </div>
 
-<h2>Application Status</h2>
 <table>
   <thead>
     <tr>

@@ -189,33 +189,39 @@ def update_yaml(config_path: Path, app_name: str, new_cycle: str):
 
 def update_installed_version(config_path: Path, app_name: str, version: str):
     """
-    Writes the detected installed version back to the YAML as installed_version.
-    Adds the field if it doesn't exist, updates it if it does.
+    Updates installed_version for a specific app in the YAML file.
+    Matches the installed_version line that appears after the app's name entry.
     """
     content = config_path.read_text(encoding="utf-8")
+    lines = content.splitlines(keepends=True)
+    
+    new_lines = []
+    in_target_app = False
+    updated = False
 
-    # If installed_version already exists for this app, update it
-    pattern_update = (
-        r'(- name:\s+' + re.escape(app_name) + r'.*?'
-        r'installed_version:\s*)[^\n]*'
-    )
-    replacement_update = rf'\g<1>"{version}"'
-    new_content, count = re.subn(pattern_update, replacement_update, content, flags=re.DOTALL)
+    for line in lines:
+        # Detect when we enter the target app's block
+        if re.match(r'\s*-\s*name:\s*' + re.escape(app_name) + r'\s*$', line):
+            in_target_app = True
 
-    if count > 0:
-        config_path.write_text(new_content, encoding="utf-8")
-        return
+        # Detect when we move to the next app's block
+        elif re.match(r'\s*-\s*name:\s*\w', line) and in_target_app:
+            in_target_app = False
 
-    # If installed_version doesn't exist yet, insert it after the name line
-    pattern_insert = r'(- name:\s+' + re.escape(app_name) + r'\s*\n)'
-    replacement_insert = rf'\g<1>    installed_version: "{version}"\n'
-    new_content, count = re.subn(pattern_insert, replacement_insert, content)
+        # Update the installed_version line when inside the target block
+        if in_target_app and re.match(r'\s*installed_version:\s*', line):
+            indent = len(line) - len(line.lstrip())
+            line = " " * indent + f'installed_version: "{version}"\n'
+            updated = True
 
-    if count == 0:
-        print(f"[WARN] {app_name}: could not write installed_version to YAML")
-        return
+        new_lines.append(line)
 
-    config_path.write_text(new_content, encoding="utf-8")
+    if not updated:
+        print(f"[WARN] {app_name}: installed_version field not found in YAML — "
+              f"please add 'installed_version: \"\"' to this app's entry manually")
+    else:
+        config_path.write_text("".join(new_lines), encoding="utf-8")
+        print(f"  → Wrote installed_version: {version}")
 
 # ---------------------------------------------------------------------------
 # Entry point
@@ -269,14 +275,13 @@ def main():
             print(f"[{name}] No eol_name set -- detecting version for info only")
 
         detected_version = detect_version(version_check, name)
+        
         if not detected_version:
             print(f"[{name}] Could not detect installed version -- tracked_cycle unchanged\n")
             skipped += 1
             continue
 
-        # Always write the detected version back to YAML for checker.py to use
-        if not args.dry_run:
-            update_installed_version(config_path, name, detected_version)
+        update_installed_version(config_path, name, detected_version)
 
         new_cycle = derive_cycle(detected_version, eol_name)
 

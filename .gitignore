@@ -1,0 +1,21 @@
+# Secrets
+.env
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Logs and reports (optionally track these — up to you)
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# VS Code
+.vscode/
+!.vscode/launch.json    # keep launch config if you want to share debug setup

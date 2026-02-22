@@ -39,7 +39,7 @@ applications:
 
   - name: Logstash
     github_repo: elastic/logstash
-    eol_name: Logstash
+    eol_name: logstash
     tracked_cycle: "9.3"
     version_check:
       method: file
@@ -48,6 +48,6 @@ applications:
 
   - name: OpenSearch
     github_repo: opensearch-project/OpenSearch
-    eol_name: OpenSearch
-    tracked_cycle: "3"
+    eol_name: opensearch
+    tracked_cycle: "2"
 

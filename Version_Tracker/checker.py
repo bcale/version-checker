@@ -44,7 +44,7 @@ GITHUB_HEADERS = {
 }
 
 # Warn when EOL is within this many days
-EOL_WARNING_THRESHOLD_DAYS = 90
+EOL_WARNING_THRESHOLD_DAYS = 5
 
 # ---------------------------------------------------------------------------
 # GitHub — latest release
@@ -163,6 +163,7 @@ def check_application(app: dict) -> dict:
 
     result = {
         "name": name,
+        "installed_version": app.get("installed_version", "—"),
         "latest_release": None,
         "latest_release_date": None,
         "latest_release_url": None,
@@ -252,6 +253,7 @@ def build_confluence_html(results: list[dict]) -> str:
   <thead>
     <tr>
       <th>Application</th>
+      <th>Currently Installed Version</th>
       <th>Latest Release</th>
       <th>Release Date</th>
       <th>EOL Date</th>
@@ -278,9 +280,11 @@ def build_confluence_html(results: list[dict]) -> str:
         else:
             row_colour = "#FFFFFF"   # white — all clear
 
+        installed = r.get("installed_version") or "—"
         html += f"""
     <tr style="background-color:{row_colour};">
       <td><strong>{r['name']}</strong></td>
+      <td>{installed}</td>
       <td>{release_link}</td>
       <td>{r['latest_release_date'] or '—'}</td>
       <td>{eol_display}</td>
@@ -298,11 +302,11 @@ def build_confluence_html(results: list[dict]) -> str:
             html += f"""
     <tr style="background-color:{esr_colour};">
       <td><em>&nbsp;&nbsp;{r['name']} ESR {esr['version']}</em></td>
-      <td>—</td>
-      <td>—</td>
+      <td>-</td>
+      <td>-</td>
       <td>{esr['eol_date']}</td>
       <td>{esr_days}</td>
-    </tr>"""
+    """
 
     html += """
   </tbody>

@@ -187,6 +187,36 @@ def update_yaml(config_path: Path, app_name: str, new_cycle: str):
     config_path.write_text(new_content, encoding="utf-8")
 
 
+def update_installed_version(config_path: Path, app_name: str, version: str):
+    """
+    Writes the detected installed version back to the YAML as installed_version.
+    Adds the field if it doesn't exist, updates it if it does.
+    """
+    content = config_path.read_text(encoding="utf-8")
+
+    # If installed_version already exists for this app, update it
+    pattern_update = (
+        r'(- name:\s+' + re.escape(app_name) + r'.*?'
+        r'installed_version:\s*)[^\n]*'
+    )
+    replacement_update = rf'\g<1>"{version}"'
+    new_content, count = re.subn(pattern_update, replacement_update, content, flags=re.DOTALL)
+
+    if count > 0:
+        config_path.write_text(new_content, encoding="utf-8")
+        return
+
+    # If installed_version doesn't exist yet, insert it after the name line
+    pattern_insert = r'(- name:\s+' + re.escape(app_name) + r'\s*\n)'
+    replacement_insert = rf'\g<1>    installed_version: "{version}"\n'
+    new_content, count = re.subn(pattern_insert, replacement_insert, content)
+
+    if count == 0:
+        print(f"[WARN] {app_name}: could not write installed_version to YAML")
+        return
+
+    config_path.write_text(new_content, encoding="utf-8")
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -243,6 +273,10 @@ def main():
             print(f"[{name}] Could not detect installed version -- tracked_cycle unchanged\n")
             skipped += 1
             continue
+
+        # Always write the detected version back to YAML for checker.py to use
+        if not args.dry_run:
+            update_installed_version(config_path, name, detected_version)
 
         new_cycle = derive_cycle(detected_version, eol_name)
 

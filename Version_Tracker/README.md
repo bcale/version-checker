@@ -1,6 +1,6 @@
 # EOL & Release Tracker
 
-Monitors open source applications for new GitHub releases and approaching End of Life (EOL) dates. Runs daily via cron and posts a formatted report to a new Confluence page each day.
+Inspects currently installed applications on the engine, then monitors open source applications for new GitHub releases and approaching End of Life (EOL) dates using endoflife.date. Runs daily via a cron job, posting a formatted report to a new Confluence page each day.
 
 ---
 
@@ -9,10 +9,11 @@ Monitors open source applications for new GitHub releases and approaching End of
 ```
 eol-tracker/
 │
-├── checker.py            # Main script — runs all checks and posts to Confluence
-├── applications.yaml     # Config — defines which apps to track
+├── sync_versions.py      # Finds currently installed app versions, then updates applications.yaml
+|── checker.py            # Main script — runs release and EOL checks and posts to Confluence
+├── applications.yaml     # Config — defines which apps to track, along with currently installed versions
 ├── requirements.txt      # Python dependencies
-├── .env                  # Local secrets (never commit this)
+├── .env                  # Local secrets ( never to be committed)
 ├── .env.example          # Safe template for .env — commit this
 ├── .gitignore
 └── README.md
@@ -24,7 +25,8 @@ eol-tracker/
 
 Each day the script:
 
-1. Reads `applications.yaml` to get the list of tracked applications
+1. 
+2. Reads `applications.yaml` to get the list of tracked applications
 2. Queries the **GitHub Releases API** to find each app's latest release
 3. Queries **endoflife.date** to check EOL status for the tracked version cycle
 4. Prints a summary to stdout
@@ -50,8 +52,6 @@ source .venv/bin/activate       # macOS/Linux
 # .venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 ```
-
-In VS Code: `Ctrl+Shift+P` → **Python: Select Interpreter** → choose `.venv`.
 
 
 ### 4. Debug configuration

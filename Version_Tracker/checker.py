@@ -189,7 +189,7 @@ def check_application(app: dict) -> dict:
     if eol_name and tracked_cycle:
         eol_data = get_eol_info(eol_name, tracked_cycle)
         if eol_data:
-            eol_value = eol_data.get("eol")
+            eol_value = eol_data.get("eolFrom") or eol_data.get("eol")
             eol_info = evaluate_eol(eol_value, name)
             result.update(eol_info)
 

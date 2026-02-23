@@ -25,6 +25,9 @@ import yaml
 
 # ---------------------------------------------------------------------------
 # Platform detection
+# I had to implement platform detection because I am working in a WSL environment and am uncertain 
+# how application data will be retrieved while running inside an engine. 
+# These commands will have to be adjusted accordingly. 
 # ---------------------------------------------------------------------------
 
 IS_WINDOWS = platform.system() == "Windows"

@@ -37,8 +37,8 @@ Each day the scripts do the following:
 ### To clone and open the project
 
 ```bash
-git clone <your-repo-url> eol-tracker
-cd eol-tracker
+git clone https://github.com/bcale/version-checker version-checker
+cd version-checker
 code .
 ```
 

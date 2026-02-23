@@ -13,14 +13,14 @@
 
 applications:
 
-  - name: Element Web
+  - name: Element Web # Matches engine
     github_repo: element-hq/element-web 
     tracked_cycle: ""
     installed_version: "1.12.10"
     version_check:
       method: command
-      command: "wsl -- dpkg -l element-desktop"
-      regex: 'element-desktop\s+([\d.]+)'
+      command: "sudo ls /usr/share/jerboa/central/components/chat/initialize/resources/"
+      regex: 'matrix-synapse-py3_([\d.]+)\+'
 
   - name: Logstash
     github_repo: elastic/logstash
@@ -32,7 +32,7 @@ applications:
       path: "/usr/share/logstash/version.rb"
       regex: "VERSION = \"([\\d.]+)\""
   
-  - name: Mattermost
+  - name: Mattermost # Matches engine 
     installed_version: "11.4.0"
     github_repo: mattermost/mattermost
     eol_name: mattermost
@@ -40,8 +40,8 @@ applications:
     installed_version: "11.4.0"
     version_check:
       method: command
-      command: "sudo -u mattermost /opt/mattermost/bin/mattermost version"
-      regex: 'Version:\s*([\d.]+)'
+      command: "sudo ls /usr/share/jerboa/central/components/mattermost/initialize/resources/"
+      regex: 'mattermost-team-([\d.]+)-linux'
 
   - name: NextCloud
     github_repo: nextcloud/server
@@ -62,15 +62,15 @@ applications:
     tracked_cycle: "3"
     installed_version: ""
 
-  - name: Sensu
+  - name: Sensu # Matches engine
     github_repo: sensu/sensu-go
     tracked_cycle: ""
     eol_name: ""
     installed_version: ""
-    version_check: 
-      method:
-      command:
-      regex:
+    version_check:
+      method: command
+      command: "sudo ls /usr/share/jerboa/central/components/sensu/initialize/resources/"
+      regex: 'sensu-go-backend_([\d.]+)-'
     notes: ""
 
   - name: Standard Notes
@@ -83,26 +83,26 @@ applications:
       regex:
     notes: ""
 
-  - name: TAK Server
+  - name: TAK Server # Matches engine
     github_repo: TAK-Product-Center/Server
     tracked_cycle: ""
     eol_name: ""
     installed_version: ""
     version_check:
-     method:
-     command:
-     regex:
+      method: command
+      command: "sudo ls /usr/share/jerboa/central/components/tak/initialize/resources/"
+      regex: 'takserver_([\d.]+-RELEASE[\d]+)'
     notes: ""
 
-  - name: Traccar
+  - name: Traccar # Matches engine
     github_repo: traccar/traccar
     tracked_cycle: ""
     eol_name: ""
     installed_version: ""
     version_check:
-     method:
-     command:
-     regex:
+      method: command
+      command: "sudo ls /usr/share/jerboa/central/components/traccar/initialize/resources/"
+      regex: 'traccar-linux-64-([\d.]+)\.zip'
     notes: ""
 
   - name: Wazuh

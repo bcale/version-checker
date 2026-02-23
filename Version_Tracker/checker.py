@@ -242,18 +242,18 @@ def build_confluence_html(results: list[dict]) -> str:
     html = f"""
 <div style="background-color:#E3FCEF; border-left: 4px solid #00875A; padding: 12px 16px; margin-bottom: 16px;">
   <strong>Daily Check — {today}</strong>
-  <p style="margin: 4px 0 0 0;">{total} engine applications tracked for their currently installed version, latest release version/date, and EOL date.</p>
+  <p style="margin: 6px 0 0 0;">{total} engine applications tracked for their currently installed version, latest release version/date, and EOL date (if made available).</p>
 </div>
 
-<table>
+<table style="width:100%; table-layout:fixed;">
   <thead>
     <tr>
-      <th>Application</th>
-      <th>Currently Installed Version</th>
-      <th>Latest Release (github linked)</th>
-      <th>Release Date</th>
-      <th>EOL Date</th>
-      <th>Days Until EOL</th>
+      <th style="width:18%">Application</th>
+      <th style="width:17%">Currently Installed Version</th>
+      <th style="width:17%">Latest Release (github.com linked)</th>
+      <th style="width:13%">Release Date</th>
+      <th style="width:13%">EOL Date</th>
+      <th style="width:12%">Days Until EOL</th>
     </tr>
   </thead>
   <tbody>
@@ -331,7 +331,7 @@ def post_to_confluence(html_body: str) -> bool:
         print(f"[ERROR] Missing environment variables: {', '.join(missing)}")
         return False
 
-    title = f"End of Life (EOL) & Release Report — {date.today().isoformat()}"
+    title = f"Latest Release and End of Life (EOL) Report — {date.today().isoformat()}"
     api_url = f"{CONFLUENCE_URL.rstrip('/')}/rest/api/content"
 
     payload = {

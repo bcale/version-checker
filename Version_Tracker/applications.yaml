@@ -59,3 +59,38 @@ applications:
     tracked_cycle: "3"
     installed_version: ""
 
+  - name: StandardNotes
+    github_repo: standardnotes/app
+    tracked_cycle: "3.2"
+    installed_version: ""
+    version_check:
+      method:
+      command:
+      regex:
+    notes: ""
+
+  - name: Wazuh
+    github_repo: wazuh/wazuh
+    tracked_cycle: ""
+    eol_name: ""
+    installed_version: ""
+    version_check: 
+      method:
+      command:
+      regex:
+    notes: ""
+
+  - name: Sensu
+    github_repo: sensu/sensu-go
+    tracked_cycle: ""
+    eol_name: ""
+    installed_version: ""
+    version_check: 
+      method:
+      command:
+      regex:
+    notes: ""
+
+  
+
+

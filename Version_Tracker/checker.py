@@ -307,7 +307,7 @@ def build_confluence_html(results: list[dict]) -> str:
     html += """
   </tbody>
 </table>
-<p><em>Release and EOL data obtained from endoflife.date and the application's Github.com repos.</em></p>
+<p><em>Release and EOL data obtained from applications' github.com repos and endoflife.date.</em></p>
 """
     return html
 

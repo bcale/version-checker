@@ -13,6 +13,25 @@
 
 applications:
 
+  - name: Element Web
+    github_repo: element-hq/element-web 
+    tracked_cycle: ""
+    installed_version: "1.12.10"
+    version_check:
+      method: command
+      command: "wsl -- dpkg -l element-desktop"
+      regex: 'element-desktop\s+([\d.]+)'
+
+  - name: Logstash
+    github_repo: elastic/logstash
+    eol_name: logstash
+    tracked_cycle: "8.19"
+    installed_version: "None"
+    version_check:
+      method: file
+      path: "/usr/share/logstash/version.rb"
+      regex: "VERSION = \"([\\d.]+)\""
+  
   - name: Mattermost
     installed_version: "11.4.0"
     github_repo: mattermost/mattermost
@@ -24,16 +43,7 @@ applications:
       command: "sudo -u mattermost /opt/mattermost/bin/mattermost version"
       regex: 'Version:\s*([\d.]+)'
 
-  - name: Element Web
-    github_repo: element-hq/element-web 
-    tracked_cycle: ""
-    installed_version: "1.12.10"
-    version_check:
-      method: command
-      command: "wsl -- dpkg -l element-desktop"
-      regex: 'element-desktop\s+([\d.]+)'
-
-  - name: Nextcloud
+  - name: NextCloud
     github_repo: nextcloud/server
     eol_name: nextcloud
     tracked_cycle: "33"
@@ -43,15 +53,8 @@ applications:
       path: "/var/www/html/nextcloud/version.php"
       regex: '\$OC_VersionString\s*=\s*[''"]([^''"]+)[''"]'
 
-  - name: Logstash
-    github_repo: elastic/logstash
-    eol_name: logstash
-    tracked_cycle: "8.19"
-    installed_version: "None"
-    version_check:
-      method: file
-      path: "/usr/share/logstash/version.rb"
-      regex: "VERSION = \"([\\d.]+)\""
+  #- name: OpenLDAP
+   # github_repo: OpenLDAP official releases are available on their main website or gitlab. I will have to add the functionality for this. 
 
   - name: OpenSearch
     github_repo: opensearch-project/OpenSearch
@@ -59,18 +62,8 @@ applications:
     tracked_cycle: "3"
     installed_version: ""
 
-  - name: StandardNotes
-    github_repo: standardnotes/app
-    tracked_cycle: "3.2"
-    installed_version: ""
-    version_check:
-      method:
-      command:
-      regex:
-    notes: ""
-
-  - name: Wazuh
-    github_repo: wazuh/wazuh
+  - name: Sensu
+    github_repo: sensu/sensu-go
     tracked_cycle: ""
     eol_name: ""
     installed_version: ""
@@ -80,8 +73,40 @@ applications:
       regex:
     notes: ""
 
-  - name: Sensu
-    github_repo: sensu/sensu-go
+  - name: Standard Notes
+    github_repo: standardnotes/app
+    tracked_cycle: "3.2"
+    installed_version: ""
+    version_check:
+      method:
+      command:
+      regex:
+    notes: ""
+
+  - name: TAK Server
+    github_repo: TAK-Product-Center/Server
+    tracked_cycle: ""
+    eol_name: ""
+    installed_version: ""
+    version_check:
+     method:
+     command:
+     regex:
+    notes: ""
+
+  - name: Traccar
+    github_repo: traccar/traccar
+    tracked_cycle: ""
+    eol_name: ""
+    installed_version: ""
+    version_check:
+     method:
+     command:
+     regex:
+    notes: ""
+
+  - name: Wazuh
+    github_repo: wazuh/wazuh
     tracked_cycle: ""
     eol_name: ""
     installed_version: ""

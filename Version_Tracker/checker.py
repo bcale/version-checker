@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 """
 EOL & Release Tracker
-
-By: Claude.ai, Caleb Barnes
 ---------------------
 Monitors open source applications for:
   - New GitHub releases
   - Approaching or passed End of Life dates
-
-Findings are posted to a new Confluence page each day.
+  - Findings are posted to a Confluence page
 
 Usage:
     python checker.py                        # uses default applications.yaml
@@ -33,9 +30,9 @@ import yaml
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 CONFLUENCE_URL = os.getenv("CONFLUENCE_URL")               # e.g. https://yourorg.atlassian.net/wiki
-CONFLUENCE_USER = os.getenv("CONFLUENCE_USER")             # your Atlassian account email
+CONFLUENCE_USER = os.getenv("CONFLUENCE_USER")             # Orgaznization's Atlassian account email/credential
 CONFLUENCE_TOKEN = os.getenv("CONFLUENCE_TOKEN")           # Atlassian API token
-CONFLUENCE_SPACE_KEY = os.getenv("CONFLUENCE_SPACE_KEY")   # e.g. "OPS" or "TEAM"
+CONFLUENCE_SPACE_KEY = os.getenv("CONFLUENCE_SPACE_KEY")   # e.g. "OPS"
 CONFLUENCE_PARENT_PAGE_ID = os.getenv("CONFLUENCE_PARENT_PAGE_ID")  # optional parent page ID
 
 GITHUB_HEADERS = {

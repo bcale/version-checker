@@ -10,10 +10,10 @@ Inspects currently installed applications on the engine, then monitors open sour
 eol-tracker/
 │
 ├── sync_versions.py      # Finds currently installed app versions, then updates applications.yaml
+|── applications.yaml     # Config — defines which apps to track, along with currently installed versions
 |── checker.py            # Main script — runs release and EOL checks and posts to Confluence
-├── applications.yaml     # Config — defines which apps to track, along with currently installed versions
 ├── requirements.txt      # Python dependencies
-├── .env                  # Local secrets ( never to be committed)
+├── .env                  # Local secrets (Never to be committed. Currently using Caleb's personal tokens)
 ├── .env.example          # Safe template for .env — commit this
 ├── .gitignore
 └── README.md
@@ -23,18 +23,16 @@ eol-tracker/
 
 ## How It Works
 
-Each day the script:
+Each day the scripts do the following:
 
-1. 
-2. Reads `applications.yaml` to get the list of tracked applications
-2. Queries the **GitHub Releases API** to find each app's latest release
-3. Queries **endoflife.date** to check EOL status for the tracked version cycle
+1. sync_versions.py hunts for services listed in `applications.yaml` for current installation versions. Updates `applications.yaml`
+2. checker.py Reads `applications.yaml` to get the list of tracked applications
+2. checker.py queries the **GitHub Releases API** to find each app's latest release
+3. Then, checker.py queries **endoflife.date** to check EOL status for the tracked version cycle. Certain applications don't have EOL data here
 4. Prints a summary to stdout
-5. Posts a colour-coded report as a new page in Confluence
+5. Posts a report as a new page in Confluence
 
 ---
-
-## VS Code Setup
 
 ### 1. Clone and open the project
 
@@ -53,28 +51,6 @@ source .venv/bin/activate       # macOS/Linux
 pip install -r requirements.txt
 ```
 
-
-### 4. Debug configuration
-
-Create `.vscode/launch.json` to run and debug with `F5`:
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Run Tracker (dry-run)",
-      "type": "python",
-      "request": "launch",
-      "program": "${workspaceFolder}/checker.py",
-      "args": ["--dry-run"],
-      "envFile": "${workspaceFolder}/.env",
-      "console": "integratedTerminal"
-    }
-  ]
-}
-```
-
 ---
 
 ## Environment Variables
@@ -85,10 +61,10 @@ cp .env.example .env
 
 | Variable | Required | Description |
 |---|---|---|
-| `GITHUB_TOKEN` | Recommended | Raises GitHub API rate limit from 60 to 5,000 requests/hour. Generate at: github.com → Settings → Developer settings → Personal access tokens |
-| `CONFLUENCE_URL` | Yes | Your Atlassian base URL, e.g. `https://yourorg.atlassian.net/wiki` |
-| `CONFLUENCE_USER` | Yes | Your Atlassian account email address |
-| `CONFLUENCE_TOKEN` | Yes | Atlassian API token. Generate at: id.atlassian.com → Security → API tokens |
+| `GITHUB_TOKEN` | Yes | Raises GitHub API rate limit from 60 to 5,000 requests/hour.
+| `CONFLUENCE_URL` | Yes | Organization's Atlassian base URL, e.g. `https://yourorg.atlassian.net/wiki` |
+| `CONFLUENCE_USER` | Yes | Organization's Atlassian account email address/identifier |
+| `CONFLUENCE_TOKEN` | Yes | Organization's Atlassian API token |
 | `CONFLUENCE_SPACE_KEY` | Yes | The key of the Confluence space where pages will be created, e.g. `OPS` |
 | `CONFLUENCE_PARENT_PAGE_ID` | Optional | Page ID to nest daily reports under. Find it in the page URL in Confluence |
 
@@ -115,10 +91,8 @@ python checker.py --config staging_apps.yaml
 Each daily run creates a new page titled:
 
 ```
-EOL & Release Report — YYYY-MM-DD
+End of Life (EOL) & Release Report — YYYY-MM-DD
 ```
-
-The page contains a summary panel at the top (green if all clear, yellow if issues found) followed by a table covering each tracked application with its latest release, EOL date, days remaining, and any warnings.
 
 If `CONFLUENCE_PARENT_PAGE_ID` is set, all daily pages are nested under that parent page, keeping your space organised over time.
 
@@ -143,6 +117,7 @@ Open `applications.yaml` and add a new entry:
 
 ```yaml
   - name: My App
+    
     github_repo: owner/repo
     eol_name: my-app          # product slug on endoflife.date (if listed)
     tracked_cycle: "3.2"      # major.minor cycle for EOL lookups

@@ -1,6 +1,8 @@
 # EOL & Release Tracker - Tracked Applications
 # ---------------------------------------------------
+# name:             Application name
 # github_repo:      GitHub repo in "owner/repo" format
+# installed_version: Application's currently installed version, updated by sync_versions.py
 # eol_name:         Product slug on endoflife.date (optional)
 # tracked_cycle:    The major/minor cycle for EOL lookups
 # version_check:    How to detect the installed version on this machine

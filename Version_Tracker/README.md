@@ -116,11 +116,15 @@ Using `.venv/bin/python` ensures cron uses the correct interpreter and installed
 Open `applications.yaml` and add a new entry:
 
 ```yaml
-  - name: My App
-    
+  - name: Application name
+    installed_version: ""
+    eol_name: "name-listed-on-endoflife.date" # product slug on endoflife.date (if listed)
     github_repo: owner/repo
-    eol_name: my-app          # product slug on endoflife.date (if listed)
     tracked_cycle: "3.2"      # major.minor cycle for EOL lookups
+    version_check:
+      method: "" #either a command or a file. We will probably only use command.
+      command: "" #command to find app's version number
+      regex: "" #regex to pull number from command output
     notes: Any useful context for your team
 ```
 

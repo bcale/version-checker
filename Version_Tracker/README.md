@@ -34,7 +34,7 @@ Each day the scripts do the following:
 
 ---
 
-### 1. Clone and open the project
+### To clone and open the project
 
 ```bash
 git clone <your-repo-url> eol-tracker
@@ -42,7 +42,7 @@ cd eol-tracker
 code .
 ```
 
-### 2. Create a virtual environment
+### Create a virtual environment
 
 ```bash
 python3 -m venv .venv
@@ -103,8 +103,8 @@ If `CONFLUENCE_PARENT_PAGE_ID` is set, all daily pages are nested under that par
 Edit your crontab with `crontab -e`:
 
 ```bash
-# Run every day at 8:00 AM
-0 8 * * * cd /path/to/eol-tracker && .venv/bin/python checker.py
+# Run every day at 7:00 AM
+0 7 * * * cd /path/to/eol-tracker && .venv/bin/python checker.py
 ```
 
 Using `.venv/bin/python` ensures cron uses the correct interpreter and installed dependencies.
